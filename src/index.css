@@ -2,10 +2,12 @@
 
 @theme {
   --color-primary: oklch(0.45 0.15 142); /* Forest green primary #15803d */
+  --color-secondary: oklch(0.72 0.15 85); /* secondary for levels */
   --color-background: oklch(0.98 0.02 142); /* Light green background #f0fdf4 */
-  --color-card: oklch(1 0 0); /*card color for nav header*/
-  --color-card-foreground: oklch(0.145 0 0); /*card color for foreground*/
-  --color-border: oklch(0.85 0.01 258); /*color for border */
+  --color-card: oklch(1 0 0); /* card color for nav header */
+  --color-border: oklch(0.85 0.01 258); /* color for border */
+  --color-accent: oklch(0.97 0 0); /* accent for levels */
+  --color-muted: oklch(0.98 0.02 142); /* muted */
 }
 
 :root {

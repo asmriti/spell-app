@@ -1,38 +1,78 @@
-import { useEffect, useState } from "react";
 import { SpellCard } from "./SpellCard";
-import { fetchSpells } from "../lib/api";
 import type { Spell } from "../lib/types/spell";
+import { SpellDetailModal } from "./ui/SpellDetailModal";
+import { useState } from "react";
+import { paginateSpells } from "../lib/paginate";
+import { Pagination, Stack } from "@mui/material";
+export interface SpellListProps {
+  spells: Spell[];
+}
 
-export const SpellList = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [spells, setSpells] = useState<Spell[]>([]);
+export const SpellList = (props: SpellListProps) => {
+  const { spells } = props;
 
-  const loadSpells = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const spellData = await fetchSpells();
-      setSpells(spellData);
-    } catch (err) {
-      setError("Failed to load spells.");
-      console.error("Error loading spells:", err);
-    } finally {
-      setLoading(false);
-    }
+  const [selectedSpell, setSelectedSpell] = useState<Spell | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 16;
+
+  const paginatedData = paginateSpells(spells, currentPage, itemsPerPage);
+  const { spells: displayedSpells, totalPages } = paginatedData;
+
+  const handleViewDetails = (spell: Spell) => {
+    setSelectedSpell(spell);
+    setIsModalOpen(true);
   };
 
-  useEffect(() => {
-    loadSpells();
-  });
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setCurrentPage(value);
+  };
+
+  if (spells.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-lg mb-2">No spells found</div>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {spells.map((spell) => (
-          <SpellCard key={spell.index} spell={spell} />
+        {displayedSpells.map((spell) => (
+          <SpellCard
+            key={spell.index}
+            spell={spell}
+            onViewDetails={handleViewDetails}
+          />
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between">
+          <div className="text-center text-sm text-muted-foreground mt-4">
+            Showing {displayedSpells.length} of {spells.length} spells
+          </div>
+          <Stack spacing={2} alignItems="center" className="mt-8">
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              shape="rounded"
+              size="large"
+            />
+          </Stack>
+        </div>
+      )}
+
+      <SpellDetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        spell={selectedSpell}
+      />
     </>
   );
 };

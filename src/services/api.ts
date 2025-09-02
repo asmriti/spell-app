@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Spell, SpellListResponse } from "./types/spell";
+import type { Spell, SpellDetail, SpellListResponse } from "../lib/types/spell";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -14,6 +14,16 @@ export async function fetchSpells(): Promise<Spell[]> {
     return response.data.results;
   } catch (error) {
     console.error("Error fetching spells:", error);
+    throw error;
+  }
+}
+
+export async function fetchSpellDetail(index: string): Promise<SpellDetail> {
+  try {
+    const response = await api.get<SpellDetail>(`/spells/${index}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching spell ${index}:`, error);
     throw error;
   }
 }

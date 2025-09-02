@@ -2,7 +2,7 @@ import { Sparkles } from "lucide-react";
 
 export const Nav = () => {
   return (
-    <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+    <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="relative">
@@ -15,7 +15,7 @@ export const Nav = () => {
             D&D Spell Compendium
           </h1>
         </div>
-        <p className="text-muted-foreground text-balance">
+        <p className="text-balance">
           Discover and explore the magical arts of Dungeons & Dragons
         </p>
       </div>
