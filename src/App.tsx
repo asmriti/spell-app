@@ -8,6 +8,8 @@ import { RefreshCw, Sparkles } from "lucide-react";
 
 import type { Spell } from "./lib/types/spell";
 import { fetchSpells } from "./services/api";
+import { FavoritesPage } from "./components/FavoritesPage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -74,12 +76,13 @@ function App() {
   }
 
   return (
-    <>
-      <div className="min-h-screen bg-background">
-        <Nav />
-        <HeroSection spells={spells} />
-      </div>
-    </>
+    <div className="min-h-screen bg-background">
+      <Nav />
+      <Routes>
+        <Route path="/" element={<HeroSection spells={spells} />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
+      </Routes>
+    </div>
   );
 }
 

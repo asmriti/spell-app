@@ -2,7 +2,7 @@ export interface Spell {
   index: string;
   name: string;
   level: number;
-  url: string;
+  url?: string;
 }
 
 export interface SpellListResponse {
@@ -28,4 +28,11 @@ export interface SpellDetail {
     name: string;
     url: string;
   }>;
+}
+
+export interface FavoriteSpell {
+  index: string;
+  name: string;
+  level: number;
+  dateAdded: string;
 }
