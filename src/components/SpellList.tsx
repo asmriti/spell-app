@@ -1,6 +1,6 @@
 import { SpellCard } from "./SpellCard";
 import type { Spell } from "../lib/types/spell";
-import { SpellDetailModal } from "./ui/SpellDetailModal";
+import { SpellDetailModal } from "./SpellDetailModal";
 import { useState } from "react";
 import { paginateSpells } from "../lib/paginate";
 import { Pagination, Stack } from "@mui/material";

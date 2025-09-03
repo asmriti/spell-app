@@ -1,5 +1,5 @@
 import { Box, Button, Modal } from "@mui/material";
-import type { Spell, SpellDetail } from "../../lib/types/spell";
+import type { Spell, SpellDetail } from "../lib/types/spell";
 import {
   BookOpen,
   Clock,
@@ -10,8 +10,8 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { fetchSpellDetail } from "../../services/api";
-import { LoadingSpinner } from "./loading";
+import { fetchSpellDetail } from "../services/api";
+import { LoadingSpinner } from "./ui/loading";
 
 interface SpellDetailsModalProps {
   isOpen: boolean;
@@ -83,6 +83,19 @@ export const SpellDetailModal = (props: SpellDetailsModalProps) => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <p>{error}</p>
+        <button
+          onClick={loadSpellDetail}
+          className="bg-transparent flex items-center justify-center cursor-pointer border border-border px-3 py-1 rounded-md"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
   return (
     <Modal open={isOpen} onClose={onClose}>
       {spell && (
